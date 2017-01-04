@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="mdc-typography">
+  <head>
+    <title>Material Components for the web</title>
+    <link rel="stylesheet"
+          href="node_modules/material-components-web/dist/material-components-web.css">
+  </head>
+  <body>
+    <h2 class="mdc-typography--display2">Hello, Material Components!</h2>
+    <div class="mdc-textfield" data-mdc-auto-init="MDCTextfield">
+      <input type="text" class="mdc-textfield__input" id="demo-input">
+      <label for="demo-input" class="mdc-textfield__label">Tell us how you feel!</label>
+    </div>
+
+    <div class="mdc-card demo-card" style="max-width: 580px; margin-right: auto; margin-left: auto;">
+          <section style="padding: 10px;"><iframe width="560" height="315" src="https://www.youtube.com/embed/QH2-TGUlwu4?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></section>
+    </div>
+
+    <div style="margin-right: auto;margin-left: auto;display: table;padding: 20px;">
+        <button class="mdc-button mdc-button--raised mdc-button--primary" onclick="go()">
+            Get Started
+        </button>
+    </div>
+
+    <div id="steps" class="mdc-card demo-card mdc-thing" style="max-width: 580px; margin-right: auto; margin-left: auto; display: none;">
+          <section style="padding: 10px;">
+            <ul class="mdc-list mdc-list--two-line">
+              <li class="mdc-list-item">
+                <span class="mdc-list-item__start-detail"><h1 class="mdc-typography--headline" style="margin: 0;">1</h1></span>
+                <span class="mdc-list-item__text" style="padding-top: 10px;">
+                  <span class="mdc-typography--title" id="1">Call: (Loading)</span>
+                  <span class="mdc-list-item__text__secondary">With the Phone you want to set up. Remember the extension!</span>
+                </span>
+              </li>
+              <li class="mdc-list-item">
+                <span class="mdc-list-item__start-detail"><h1 class="mdc-typography--headline" style="margin: 0;">2</h1></span>
+                <span class="mdc-list-item__text" style="padding-top: 10px;">
+                  <span class="mdc-typography--title">Give out your new emergency number</span>
+                  <span class="mdc-list-item__text__secondary" id="2">Make sure your contacts save (Loading) with the extension.</span>
+                </span>
+              </li>
+              <li class="mdc-list-item">
+                <span class="mdc-list-item__start-detail"><h1 class="mdc-typography--headline" style="margin: 0;">3</h1></span>
+                <span class="mdc-list-item__text" style="padding-top: 10px;">
+                  <span class="mdc-typography--title">Create a Contact for 772-291-1911</span>
+                  <span class="mdc-list-item__text__secondary">(No extension here) Create a contact named Emergency. For iOS add this contact to your favorites.  For Android star this contact. </span>
+                </span>
+              </li>
+              <li class="mdc-list-item">
+                <span class="mdc-list-item__start-detail"><h1 class="mdc-typography--headline" style="margin: 0;">4</h1></span>
+                <span class="mdc-list-item__text" style="padding-top: 10px;">
+                  <span class="mdc-typography--title">Set your phone to ring when 'Emergency' calls you</span>
+                  <span class="mdc-list-item__text__secondary">For iOS go to Settings -> Do Not Disturb -> Allow Calls From -> Favorites. For Android go to Settings -> Sound -> Do not disturb -> Priority only allows -> Calls -> From starred contacts only.</span>
+                </span>
+              </li>
+              <li class="mdc-list-item">
+                <span class="mdc-list-item__start-detail"><h1 class="mdc-typography--headline" style="margin: 0;">5</h1></span>
+                <span class="mdc-list-item__text" style="padding-top: 10px;">
+                  <span class="mdc-typography--title">Test this setup</span>
+                  <span class="mdc-list-item__text__secondary" id = "3">Set your phone on silent. Have a contact call (Loading). Your phone should ring as you recieve a call from your Emergency contact (772-291-1911).</span>
+                </span>
+              </li>
+            </ul>
+          </section>
+    </div>
+
+    <script src="node_modules/material-components-web/dist/material-components-web.js"></script>
+    <script>mdc.autoInit()</script>
+    <style>
+
+        @keyframes fade-in {
+          from {
+            transform: translateY(-80px);
+            opacity: 0;
+          }
+
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        .mdc-thing {
+          animation-timing-function: cubic-bezier(0, 0, .2, 1) ;
+          animation-duration: 350ms;
+          animation-name: fade-in;
+        }
+        .mdc-list--two-line .mdc-list-item {
+          margin-bottom: 40px;
+        }
+    </style>
+    <script type="text/javascript">
+      function go(){
+        document.getElementById("steps").style.display = 'block';
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var number = this.responseText.slice(1,-1);
+            document.getElementById("1").innerHTML = "Call: 772-291-1911," + number;
+            document.getElementById("2").innerHTML = "Make sure your contacts save 772-291-1911," + number + " with the extension.";
+            document.getElementById("3").innerHTML ="Set your phone on silent. Have a contact call 772-291-1911," + number + ". Your phone should ring as you recieve a call from your Emergency contact (772-291-1911).";
+            mdc.autoInit();
+            //document.getElementById("steps").innerHTML =
+            //this.responseText;*/
+          }
+        };
+        xhttp.open("GET", "https://m3o6evin5g.execute-api.us-west-2.amazonaws.com/test/number", true);
+        xhttp.send();
+      }
+    </script>
+
+  </body>
+</html>
